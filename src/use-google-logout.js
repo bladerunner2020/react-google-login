@@ -76,7 +76,7 @@ const useGoogleLogout = ({
     return () => {
       removeScript(document, 'google-login')
     }
-  }, [])
+  }, [clientId, hostedDomain])
 
   return { signOut, loaded }
 }

@@ -148,7 +148,7 @@ const useGoogleLogin = ({
       unmounted = true
       removeScript(document, 'google-login')
     }
-  }, [])
+  }, [clientId, hostedDomain])
 
   useEffect(() => {
     if (autoLoad) {
