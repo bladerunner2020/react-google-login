@@ -25,6 +25,7 @@ const useGoogleLogin = ({
   prompt
 }) => {
   const [loaded, setLoaded] = useState(false)
+  const [unmounted, setUnmounted] = useState(true)
 
   function handleSigninSuccess(res) {
     /*
@@ -72,7 +73,12 @@ const useGoogleLogin = ({
   }
 
   useEffect(() => {
-    let unmounted = false
+    console.log('useEffect')
+  
+    if (!unmounted) {
+      removeScript(document, 'google-login')
+    }
+
     const onLoadFailure = onScriptLoadFailure || onFailure
     loadScript(
       document,
@@ -143,9 +149,10 @@ const useGoogleLogin = ({
         onLoadFailure(err)
       }
     )
+    setUnmounted(false)
 
     return () => {
-      unmounted = true
+      setUnmounted(true)
       removeScript(document, 'google-login')
     }
   }, [clientId, hostedDomain])
